@@ -11,39 +11,70 @@ import { tableData } from '@/data/mockTable'
 import MetricCard from '@/components/MetricCard'
 import Chart from '@/components/Chart'
 import DataTable from '@/components/DataTable'
+import Navbar from '@/components/Navbar'
 
 
 
 export default function DashboardPage() {
+
     console.log("revenueOverTime", revenueOverTime);
     console.log("conversionsByChannel", conversionsByChannel);
     console.log("trafficSources", trafficSources);
     return (
       <div className="p-6 space-y-6">
-        {/* Top KPI cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {metrics.map((metrics:{ title: string; value: number | string; change: number; icon: string }) => (
-            <MetricCard
-              key={metrics.title}
-              title={metrics.title}
-              value={metrics.value}
-              change={metrics.change}
-              icon={metrics.icon}
-            />
-          ))}
-        </div>
-  
-        {/* Charts Section */}
-        <div className="h-fit w-full">
-          <Chart title="Revenue Over Time" type="line" data={revenueOverTime} dataKey="revenue" labelKey="month" />
-          <Chart title="Conversions by Channel" type="bar" data={conversionsByChannel} dataKey="conversions" labelKey="channel" />
-          <Chart title="Traffic Sources" type="pie" data={trafficSources} dataKey="value" labelKey="source" />
-        </div>
-  
-        {/* Data Table */}
-        <div className="mt-6">
-          <DataTable data={tableData} />
-        </div>
+        <Navbar /> {/* Added Navbar with consistent style */}
+        
+              {/* Top KPI cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {metrics.map((metrics:{ title: string; value: number | string; change: number; icon: string }) => (
+                  <MetricCard className="min-h-[100px]" 
+
+                    key={metrics.title}
+                    title={metrics.title}
+                    value={metrics.value}
+                    change={metrics.change}
+                    icon={metrics.icon}
+                  />
+                ))}
+              </div>
+        
+              {/* Charts Section */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+  {/* Full-width line chart */}
+  <div className="col-span-full">
+    <Chart
+      title="Revenue Over Time"
+      type="line"
+      data={revenueOverTime}
+      dataKey="revenue"
+      labelKey="month" // if you allow height prop
+    />
+  </div>
+
+  {/* Bar chart */}
+  <Chart
+    title="Conversions by Channel"
+    type="bar"
+    data={conversionsByChannel}
+    dataKey="conversions"
+    labelKey="channel"
+  />
+
+  {/* Pie chart */}
+  <Chart
+    title="Traffic Sources"
+    type="pie"
+    data={trafficSources}
+    dataKey="value"
+    labelKey="source"
+  />
+</div>
+              {/* Data Table */}
+              <div className="mt-6 bg-card p-4 rounded-xl shadow">
+                <h2 className="text-lg font-semibold mb-2">Recent Signups</h2>
+                <DataTable data={tableData} />
+              </div>
+
       </div>
     )
   }

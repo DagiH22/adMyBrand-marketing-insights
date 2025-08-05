@@ -68,7 +68,7 @@ export default function Chart({ title, type, data, dataKey, labelKey }: ChartPro
   return (
     <div className="p-4 bg-card shadow rounded-xl">
       <h3 className="text-lg font-semibold mb-4">{title}</h3>
-      <div className="w-full h-[150px]">
+      <div className="w-full h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
           {chart}
         </ResponsiveContainer>

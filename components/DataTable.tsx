@@ -83,9 +83,6 @@ export default function DataTable({ data }: TableProps) {
     ))}
   </tr>
 </thead>
-
-
-
         <tbody>
           {paginatedData.map((row) => (
             <tr key={row.id} className="border-t">
@@ -100,21 +97,21 @@ export default function DataTable({ data }: TableProps) {
       </table>
 
       {/* Pagination Controls */}
-      <div className="flex justify-between items-center mt-4">
+      <div className="flex justify-center  gap-4 items-center mt-4">
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          className="px-4 py-2 bg-gray-900 cursor-pointer rounded disabled:opacity-50"
         >
           Previous
         </button>
         <span className="text-sm text-muted-foreground">
-          Page {currentPage} of {totalPages}
+           {currentPage}/{totalPages}
         </span>
         <button
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          className="px-4 py-2 bg-gray-900 cursor-pointer rounded disabled:opacity-50"
         >
           Next
         </button>

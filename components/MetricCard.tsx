@@ -4,6 +4,7 @@ interface MetricCardProps {
     value: number | string
     change: number
     icon: string
+    className?: string 
   }
   
   export default function MetricCard({ title, value, change, icon }: MetricCardProps) {
