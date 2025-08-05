@@ -34,7 +34,7 @@ export default function DashboardPage() {
         </div>
   
         {/* Charts Section */}
-        <div className="h-[500px] w-full">
+        <div className="h-fit w-full">
           <Chart title="Revenue Over Time" type="line" data={revenueOverTime} dataKey="revenue" labelKey="month" />
           <Chart title="Conversions by Channel" type="bar" data={conversionsByChannel} dataKey="conversions" labelKey="channel" />
           <Chart title="Traffic Sources" type="pie" data={trafficSources} dataKey="value" labelKey="source" />
