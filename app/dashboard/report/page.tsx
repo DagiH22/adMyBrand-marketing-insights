@@ -25,22 +25,22 @@ export default function ReportsPage() {
 
   // Export to CSV
   const exportToCSV = () => {
-    const headers = Object.keys(originalData[0])
+    const headers = Object.keys(originalData[0]) as (keyof typeof originalData[0])[];
     const csvRows = [
       headers.join(','), // header row
       ...filteredData.map(row =>
         headers.map(field => JSON.stringify(row[field] ?? '')).join(',')
       ),
-    ]
-    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' })
-    const url = URL.createObjectURL(blob)
-
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'report.csv'
-    a.click()
-    URL.revokeObjectURL(url)
-  }
+    ];
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+  
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'report.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   // Export to PDF
   const exportToPDF = () => {
