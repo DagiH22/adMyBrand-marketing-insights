@@ -18,7 +18,7 @@ type SortKey = keyof TableProps["data"][0]
 type SortDirection = "asc" | "desc"
 
 export default function DataTable({ data , page }: TableProps) {
-  const ITEMS_PER_PAGE = page
+  const ITEMS_PER_PAGE = page ?? 4
   const [currentPage, setCurrentPage] = React.useState(1)
   const [sortKey, setSortKey] = React.useState<SortKey>("name")
   const [sortDirection, setSortDirection] = React.useState<SortDirection>("asc")

@@ -67,7 +67,7 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
           cx={cx}
           cy={cy}
           innerRadius={innerRadius}
-          outerRadius={outerRadius + 10}
+          outerRadius={(outerRadius !== undefined ? outerRadius : 0) + 10}
           startAngle={startAngle}
           endAngle={endAngle}
           fill={fill}
@@ -88,7 +88,11 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
             if (active && payload && payload.length) {
               return (
                 <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
-                  <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+                 <p>{`
+  ${payload[0]?.name ?? payload[0]?.payload?.[labelKey as keyof typeof payload[0]['payload']] ?? ''}
+  : ${payload[0]?.value ?? ''}
+`}</p>
+
                 </div>
               );
             }
@@ -108,7 +112,11 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
           if (active && payload && payload.length && payload[0]) {
             return (
               <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
-                <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+                <p>{`
+  ${payload[0]?.name ?? payload[0]?.payload?.[labelKey as keyof typeof payload[0]['payload']] ?? ''}
+  : ${payload[0]?.value ?? ''}
+`}</p>
+
               </div>
             );
           }
@@ -145,7 +153,11 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
               if (active && payload && payload.length) {
                 return (
                   <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
-                    <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+                    <p>{`
+  ${payload[0]?.name ?? payload[0]?.payload?.[labelKey as keyof typeof payload[0]['payload']] ?? ''}
+  : ${payload[0]?.value ?? ''}
+`}</p>
+
                   </div>
                 );
               }
