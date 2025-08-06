@@ -1,6 +1,6 @@
 # 🚀 ADmyBRAND Marketing Insight
 
-**ADmyBRAND Insights** is an AI-powered analytics dashboard designed for digital marketing agencies. Built with **Next.js**, **Tailwind CSS**, and **shadcn/ui**, it provides a modern and responsive UI to track key marketing metrics, user behavior, and more using interactive charts and mock data.
+**ADmyBRAND Insights** is an analytics dashboard designed for digital marketing agencies. Built with **Next.js**, **Tailwind CSS**, and **shadcn/ui**, it provides a modern and responsive UI to track key marketing metrics, user behavior, and more using interactive charts and mock data.
 
 ---
 
@@ -135,3 +135,27 @@ npm install
 
 # Start the development server
 npm run dev
+```
+
+## 🔧 Development Notes
+- All data is mocked using @faker-js/faker from the data/ folder.
+
+- Chart.tsx, DataTable.tsx, and ExportButton.tsx are fully reusable components.
+
+- Utility functions live in lib/utils.ts.
+
+- UI building blocks (e.g., button.tsx, card.tsx) follow shadcn/ui architecture.
+
+- All pages use the App Router introduced in Next.js 13+.
+## 🤖 AI Usage
+This project leveraged AI tools to streamline development, improve code quality, and speed up the building process:
+
+ChatGPT (OpenAI): Used extensively for planning the architecture, writing reusable component logic, generating documentation (like this README), and solving bugs during development. It also assisted in crafting utility functions and implementing best practices in Next.js, Tailwind CSS, and Recharts.
+
+GitHub Copilot: Actively used during live coding in VS Code to suggest code completions, repetitive logic, and component structure. Copilot significantly boosted productivity by generating boilerplate code for components like charts, buttons, and tables based on simple comments or intent.
+
+While the AI tools enhanced the development workflow, every line of code was reviewed, customized, and integrated by the developer to ensure consistency, performance, and maintainability.
+
+
+## 👤 Author
+Made with 💻 by Dagmawi Heywot
