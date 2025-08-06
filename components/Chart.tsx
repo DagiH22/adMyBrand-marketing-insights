@@ -18,7 +18,7 @@ interface PieActiveShapeProps {
   startAngle?: number;
   endAngle?: number;
   fill?: string;
-  payload?: any;
+  payload?: DataItem |undefined;
   midAngle?: number;
 }
 interface CustomTooltipProps {
@@ -26,9 +26,10 @@ interface CustomTooltipProps {
   payload?: {
     name?: string;
     value?: number | string;
-    payload?: any;
+    payload?: DataItem |undefined;
   }[];
 }
+import type { PieProps } from 'recharts';
 
 
 
@@ -42,7 +43,7 @@ interface ChartProps {
   type: 'line' | 'bar' | 'pie';
   data: DataItem[];
   dataKey: string;
-  labelKey: string;
+  labelKey: string |number;
   className?: string;
   activeIndex?: number | null;
 }
@@ -103,15 +104,15 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
         <XAxis dataKey={labelKey} />
         <YAxis />
         <Tooltip
-          content={({ active, payload }: CustomTooltipProps) => {
-            if (active && payload && payload.length) {
-              return (
-                <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
-                  <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
-                </div>
-              );
-            }
-            return null;
+         content={({ active, payload }: CustomTooltipProps) => {
+          if (active && payload && payload.length && payload[0]) {
+            return (
+              <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+                <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+              </div>
+            );
+          }
+          return null;
           }}
         />
         <Bar dataKey={dataKey} fill="#82ca9d" />
@@ -121,20 +122,20 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
     chart = (
       <div className="flex items-center justify-center">
         <PieChart width={300} height={200}>
-          <Pie
-            data={data}
-            dataKey={dataKey}
-            nameKey={labelKey}
-            cx="40%"
-            cy="50%"
-            outerRadius={60}
-            {...({
-              activeIndex: activeIndex ?? -1,
-              activeShape: renderActiveShape,
-              onMouseEnter: (_: any, index: number) => setActiveIndex(index),
-              onMouseLeave: () => setActiveIndex(null),
-            } as any)}
-          >
+        <Pie
+  data={data}
+  dataKey={dataKey}
+  nameKey={labelKey}
+  cx="40%"
+  cy="50%"
+  outerRadius={60}
+  {...({
+    activeIndex: activeIndex ?? -1,
+    activeShape: renderActiveShape,
+    onMouseEnter: (_: unknown, index: number) => setActiveIndex(index),
+    onMouseLeave: () => setActiveIndex(null),
+  } as unknown as Partial<PieProps>)}
+>
             {data.map((_, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
