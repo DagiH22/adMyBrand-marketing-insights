@@ -13,8 +13,8 @@ import Sidebar from "@/components/Sidebar";
 
 export default function DashboardPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="w-[85%] absolute right-0 ">
+    <div className="flex flex-col min-h-screen bg-[#F4F0FF]">
+      <div className="w-[85%] bg-[#F4F0FF] absolute right-0 ">
         <Navbar /> {/* Top Navbar */}   
 
       </div>
@@ -25,7 +25,7 @@ export default function DashboardPage() {
         <Sidebar />
       </aside>
         {/* Main content on the right */}
-        <main className="flex-1 p-4 overflow-y-auto mt-[70px]">
+        <main className="flex-1 p-4 bg-[#F4F0FF] overflow-y-auto mt-[70px]">
           {/* KPI + Line Chart Side-by-Side */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
             {/* KPI Cards */}

@@ -4,8 +4,16 @@ import { useTheme } from 'next-themes'
 import { User } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
+  const pathname = usePathname()
+  
+  const pageTitle = (() => {
+    if (pathname === '/dashboard/settings') return 'Settings'
+    if (pathname === '/dashboard/report') return 'Reports'
+    return 'Dashboard'
+  })()
   const { theme, setTheme } = useTheme()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -25,7 +33,8 @@ export default function Navbar() {
 
   return (
     <nav className="flex justify-between items-center px-6 py-4 shadow relative">
-      <h1 className="text-xl font-bold ">Dashboard</h1>
+      <h1 className="text-xl font-bold">{pageTitle}</h1>
+
 
       <div className="relative" ref={dropdownRef}>
         {/* User Icon Button */}

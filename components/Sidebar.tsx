@@ -20,7 +20,7 @@ export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="h-186 w-60 bg-[E3D9FF] shadow p-6 flex flex-col">
+    <aside className="h-186 w-60  shadow p-6 flex flex-col">
       <h1 className="text-xl font-bold mb-10 text-black ">
         <a href="https://us.admybrand.com/" target='_blank'><img src="https://us.admybrand.com/assets/svg/web_logo.svg" alt="admybrand logo" /></a>
         

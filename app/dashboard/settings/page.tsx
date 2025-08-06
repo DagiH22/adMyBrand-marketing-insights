@@ -1,72 +1,120 @@
 // app/dashboard/settings/page.tsx
-import * as React from "react";
 
-import Navbar from '@/components/Navbar';
-import Sidebar from "@/components/Sidebar";
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Switch } from '@/components/ui/switch'
+import { Button } from '@/components/ui/button'
+import Navbar from '@/components/Navbar'
+import Sidebar from '@/components/Sidebar'
 
 export default function SettingsPage() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [editing, setEditing] = useState(false)
+  const [notifications, setNotifications] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
+
+  useEffect(() => {
+    const savedName = localStorage.getItem('user_name') || 'John Doe'
+    const savedEmail = localStorage.getItem('user_email') || 'johndoe@email.com'
+    const savedNotifications = localStorage.getItem('notifications') === 'true'
+    const savedDarkMode = localStorage.getItem('dark_mode') === 'true'
+
+    setName(savedName)
+    setEmail(savedEmail)
+    setNotifications(savedNotifications)
+    setDarkMode(savedDarkMode)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('notifications', String(notifications))
+  }, [notifications])
+
+  useEffect(() => {
+    localStorage.setItem('dark_mode', String(darkMode))
+  }, [darkMode])
+
+  const handleSave = () => {
+    localStorage.setItem('user_name', name)
+    localStorage.setItem('user_email', email)
+    setEditing(false)
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Navbar at top */}
-      <div className="w-[85%] absolute right-0">
+    <div className="flex h-screen bg-[#F4F0FF]">
+      <aside className="sticky top-0 h-screen overflow-y-auto bg-[#F4F0FF] w-[250px] shadow-lg z-30">
+        <Sidebar />
+      </aside>
+      <div className="flex-1 bg-[#F4F0FF]">
         <Navbar />
-      </div>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
-        <aside className="sticky top-0 h-screen overflow-y-auto bg-[#F4F0FF] w-[250px] shadow-lg z-30">
-          <Sidebar />
-        </aside>
+        <div className="p-6 space-y-6 ">
+          <div className="flex justify-between items-start w-[40%]">
+            <div>
+              <h1 className="text-2xl font-bold mb-1">Settings</h1>
+              <p className="text-sm text-muted-foreground">Manage your preferences</p>
+            </div>
+            {!editing && (
+              <Button onClick={() => setEditing(true)} variant="outline">
+                Edit
+              </Button>
+            )}
+          </div>
 
-        {/* Main Settings Content */}
-        <main className="flex-1 p-4 overflow-y-auto mt-[70px]">
-          <div className="bg-white rounded-xl shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">Settings</h2>
+          <div className="p-6 rounded-xl shadow space-y-6 w-[40%] bg-[#FAF9FF]">
+            <div className="space-y-2">
+              <label className="block font-semibold text-sm">Name</label>
+              <input
+                type="text"
+                value={name}
+                disabled={!editing}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-3 py-2 border rounded-md focus:outline-none"
+              />
+            </div>
 
-            {/* Example Setting Section */}
-            <div className="space-y-6">
-              {/* Profile Section */}
-              <div>
-                <h3 className="text-lg font-medium mb-2">Profile</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    className="w-full border border-gray-300 rounded p-2"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    className="w-full border border-gray-300 rounded p-2"
-                  />
-                </div>
-              </div>
+            <div className="space-y-2 ">
+              <label className="block font-semibold text-sm">Email</label>
+              <input
+                type="email"
+                value={email}
+                disabled={!editing}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border rounded-md focus:outline-none"
+              />
+            </div>
 
-              {/* Preferences Section */}
-              <div>
-                <h3 className="text-lg font-medium mb-2">Preferences</h3>
-                <div className="flex items-center space-x-4">
-                  <label className="flex items-center gap-2">
-                    <input type="checkbox" />
-                    Enable Notifications
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <input type="checkbox" />
-                    Dark Mode
-                  </label>
-                </div>
-              </div>
+            {editing && (
+              <Button onClick={handleSave} className="mt-4">
+                Save
+              </Button>
+            )}
+          </div>
 
-              {/* Save Button */}
-              <div>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                  Save Settings
-                </button>
-              </div>
+          <div className=" p-6 rounded-xl shadow space-y-6 w-[40%] bg-[#FAF9FF]">
+            <h2 className="text-lg font-bold">Preferences</h2>
+
+            <div className="flex items-center justify-between bg-[#red]">
+              <label>Enable Notifications</label>
+              <Switch
+                checked={notifications}
+                onCheckedChange={setNotifications}
+                className={notifications ? 'bg-blue-500' : ''}
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <label>Dark Mode</label>
+              <Switch
+                checked={darkMode}
+                onCheckedChange={setDarkMode}
+                className={darkMode ? 'bg-blue-500' : ''}
+              />
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </div>
-  );
+  )
 }

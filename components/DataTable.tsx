@@ -62,7 +62,7 @@ export default function DataTable({ data , page }: TableProps) {
   // }
 
   return (
-    <div className="overflow-x-auto bg-card p-3 px-4 rounded-xl shadow">
+    <div className="overflow-x-auto bg-white p-3 px-4 rounded-xl shadow">
       <div className="flex items-center justify-between relative w-full">
   {/* Heading - stick to left */}
   <h2 className="text-lg font-semibold w-fit">Recent Signups</h2>
