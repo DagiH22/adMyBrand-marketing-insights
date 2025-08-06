@@ -10,7 +10,29 @@ import {
   Sector
 } from 'recharts';
 import type { ReactElement } from 'react';
-import type { PieActiveShapeProps, TooltipProps } from 'recharts/types/component/Pie';
+import type {  TooltipProps } from 'recharts';
+interface PieActiveShapeProps {
+  cx?: number;
+  cy?: number;
+  innerRadius?: number;
+  outerRadius?: number;
+  startAngle?: number;
+  endAngle?: number;
+  fill?: string;
+  payload?: any;
+  midAngle?: number;
+}
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: {
+    name?: string;
+    value?: number | string;
+    payload?: any;
+  }[];
+}
+
+
+
 
 interface DataItem {
   [key: string]: string | number | undefined;
@@ -62,7 +84,7 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
         <XAxis dataKey={labelKey} />
         <YAxis />
         <Tooltip
-          content={({ active, payload }: TooltipProps<number, string>) => {
+          content={({ active, payload }: CustomTooltipProps) => {
             if (active && payload && payload.length) {
               return (
                 <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
@@ -82,7 +104,7 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
         <XAxis dataKey={labelKey} />
         <YAxis />
         <Tooltip
-          content={({ active, payload }: TooltipProps<number, string>) => {
+          content={({ active, payload }: CustomTooltipProps) => {
             if (active && payload && payload.length) {
               return (
                 <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
@@ -107,17 +129,19 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
             cx="40%"
             cy="50%"
             outerRadius={60}
-            activeIndex={activeIndex ?? -1}
-            activeShape={renderActiveShape}
-            onMouseEnter={(_, index) => setActiveIndex(index)}
-            onMouseLeave={() => setActiveIndex(null)}
+            {...({
+              activeIndex: activeIndex ?? -1,
+              activeShape: renderActiveShape,
+              onMouseEnter: (_: any, index: number) => setActiveIndex(index),
+              onMouseLeave: () => setActiveIndex(null),
+            } as any)}
           >
             {data.map((_, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip
-            content={({ active, payload }: TooltipProps<number, string>) => {
+            content={({ active, payload }: CustomTooltipProps) => {
               if (active && payload && payload.length) {
                 return (
                   <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
@@ -132,7 +156,8 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
         </PieChart>
       </div>
     );
-  } else {
+  }
+   else {
     chart = <></>; // fallback empty chart
   }
 
