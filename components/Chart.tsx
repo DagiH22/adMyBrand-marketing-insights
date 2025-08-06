@@ -10,11 +10,16 @@ import {
   Sector
 } from 'recharts';
 import type { ReactElement } from 'react';
+import type { PieActiveShapeProps, TooltipProps } from 'recharts/types/component/Pie';
+
+interface DataItem {
+  [key: string]: string | number | undefined;
+}
 
 interface ChartProps {
   title: string;
   type: 'line' | 'bar' | 'pie';
-  data: any[];
+  data: DataItem[];
   dataKey: string;
   labelKey: string;
   className?: string;
@@ -26,18 +31,16 @@ const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042'];
 export default function Chart({ title, type, data, dataKey, labelKey, className }: ChartProps) {
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
 
-  const renderActiveShape = (props: any) => {
+  const renderActiveShape = (props: PieActiveShapeProps) => {
     const RADIAN = Math.PI / 180;
     const {
       cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
       fill, payload
     } = props;
+    console.log(RADIAN,midAngle,payload)
 
     return (
       <g>
-        {/* <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-          {payload[labelKey]}
-        </text> */}
         <Sector
           cx={cx}
           cy={cy}
@@ -59,19 +62,18 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
         <XAxis dataKey={labelKey} />
         <YAxis />
         <Tooltip
-  content={({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
-          <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
-        </div>
-      );
-    }
-    return null;
-  }}
-/>
-
-        <Line type="monotone" dataKey={dataKey} stroke="#06B6D4 " width={2}/>
+          content={({ active, payload }: TooltipProps<number, string>) => {
+            if (active && payload && payload.length) {
+              return (
+                <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+                  <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+                </div>
+              );
+            }
+            return null;
+          }}
+        />
+        <Line type="monotone" dataKey={dataKey} stroke="#06B6D4" width={2} />
       </LineChart>
     );
   } else if (type === 'bar') {
@@ -80,18 +82,17 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
         <XAxis dataKey={labelKey} />
         <YAxis />
         <Tooltip
-  content={({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
-          <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
-        </div>
-      );
-    }
-    return null;
-  }}
-/>
-
+          content={({ active, payload }: TooltipProps<number, string>) => {
+            if (active && payload && payload.length) {
+              return (
+                <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+                  <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+                </div>
+              );
+            }
+            return null;
+          }}
+        />
         <Bar dataKey={dataKey} fill="#82ca9d" />
       </BarChart>
     );
@@ -116,28 +117,23 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
             ))}
           </Pie>
           <Tooltip
-  content={({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
-          <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
-        </div>
-      );
-    }
-    return null;
-  }}
-/>
-
-          <Legend
-            layout="vertical"
-            verticalAlign="middle"
-            align="right"
+            content={({ active, payload }: TooltipProps<number, string>) => {
+              if (active && payload && payload.length) {
+                return (
+                  <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+                    <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+                  </div>
+                );
+              }
+              return null;
+            }}
           />
+          <Legend layout="vertical" verticalAlign="middle" align="right" />
         </PieChart>
       </div>
     );
   } else {
-    chart = <></>; // fallback
+    chart = <></>; // fallback empty chart
   }
 
   return (

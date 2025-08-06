@@ -3,11 +3,10 @@ interface MetricCardProps {
     title: string
     value: number | string
     change: number
-    icon: string
     className?: string 
   }
   
-  export default function MetricCard({ title, value, change, icon }: MetricCardProps) {
+  export default function MetricCard({ title, value, change }: MetricCardProps) {
     return (
       <div className="p-4 rounded-xl shadow bg-[#FAF9FF] min-h-fit h-[100px] min-w-[150px] w-fit
   transition-transform duration-300 ease-in-out hover:scale-[1.03] hover:shadow-lg">

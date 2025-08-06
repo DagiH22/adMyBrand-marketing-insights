@@ -4,6 +4,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 import {
   LayoutDashboard,
   BarChart3,
@@ -22,7 +23,9 @@ export default function Sidebar() {
   return (
     <aside className="h-186 w-60  shadow p-6 flex flex-col">
       <h1 className="text-xl font-bold mb-10 text-black ">
-        <a href="https://us.admybrand.com/" target='_blank'><img src="https://us.admybrand.com/assets/svg/web_logo.svg" alt="admybrand logo" /></a>
+        <a href="https://us.admybrand.com/" target='_blank'>
+          <Image src="https://us.admybrand.com/assets/svg/web_logo.svg" alt="admybrand Logo" width={134} height={54}/>
+          </a>
         
       </h1>
 

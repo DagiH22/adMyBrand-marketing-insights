@@ -1,6 +1,6 @@
 'use client'
 
-import { useTheme } from 'next-themes'
+// import { useTheme } from 'next-themes'
 import { User } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
@@ -14,7 +14,7 @@ export default function Navbar() {
     if (pathname === '/dashboard/report') return 'Reports'
     return 'Dashboard'
   })()
-  const { theme, setTheme } = useTheme()
+  // const { theme, setTheme } = useTheme()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
