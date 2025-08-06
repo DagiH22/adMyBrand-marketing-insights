@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from 'react'
 import { Switch } from '@/components/ui/switch'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 
@@ -95,12 +95,13 @@ export default function SettingsPage() {
           <div className=" p-6 rounded-xl shadow space-y-6 w-[40%] bg-[#FAF9FF]">
             <h2 className="text-lg font-bold">Preferences</h2>
 
-            <div className="flex items-center justify-between bg-[#red]">
+            <div className="flex items-center justify-between">
               <label>Enable Notifications</label>
               <Switch
                 checked={notifications}
                 onCheckedChange={setNotifications}
-                className={notifications ? 'bg-blue-500' : ''}
+                className={notifications ? 'bg-blue-500' : 'bg-gray-300'}
+                
               />
             </div>
 
