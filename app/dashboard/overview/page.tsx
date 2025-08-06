@@ -14,14 +14,18 @@ import Sidebar from "@/components/Sidebar";
 export default function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar /> {/* Top Navbar */}
+      <div className="w-[85%] absolute right-0 ">
+        <Navbar /> {/* Top Navbar */}   
 
-      <div className="flex flex-1 overflow-hidden">
+      </div>
+
+      <div className="flex flex-1 overflow-hidden ">
         {/* Sidebar on the left */}
+        <aside className="sticky top-0 h-screen overflow-y-auto bg-[#F4F0FF] w-[250px] shadow-lg z-30">
         <Sidebar />
-
+      </aside>
         {/* Main content on the right */}
-        <main className="flex-1 p-4 overflow-y-auto">
+        <main className="flex-1 p-4 overflow-y-auto mt-[70px]">
           {/* KPI + Line Chart Side-by-Side */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
             {/* KPI Cards */}
@@ -70,8 +74,8 @@ export default function DashboardPage() {
           </div>
 
           {/* Data Table */}
-          <div className="bg-card p-4 p-b-0 rounded-xl shadow">
-            <DataTable data={tableData} />
+          <div className="bg-white p-4 p-b-0 rounded-xl shadow">
+            <DataTable data={tableData} page={4}/>
           </div>
         </main>
       </div>

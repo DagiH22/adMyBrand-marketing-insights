@@ -9,15 +9,16 @@ interface TableProps {
     revenue: string
     status: string
     signupDate: string
-  }[]
+  }[],
+  page?: number
 }
 
-const ITEMS_PER_PAGE = 4
 
 type SortKey = keyof TableProps["data"][0]
 type SortDirection = "asc" | "desc"
 
-export default function DataTable({ data }: TableProps) {
+export default function DataTable({ data , page }: TableProps) {
+  const ITEMS_PER_PAGE = page
   const [currentPage, setCurrentPage] = React.useState(1)
   const [sortKey, setSortKey] = React.useState<SortKey>("name")
   const [sortDirection, setSortDirection] = React.useState<SortDirection>("asc")
@@ -114,7 +115,7 @@ export default function DataTable({ data }: TableProps) {
 </thead>
         <tbody>
           {paginatedData.map((row) => (
-            <tr key={row.id} className="border-t">
+            <tr key={row.id} className="border-t hover:bg-[#f0ebff] transition-colors">
               <td className="px-4 py-2">{row.name}</td>
               <td className="px-4 py-2">{row.email}</td>
               <td className="px-4 py-2">{row.revenue}</td>

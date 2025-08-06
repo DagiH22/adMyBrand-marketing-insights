@@ -20,9 +20,10 @@ export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="h-186 w-60 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 p-6 flex flex-col">
-      <h1 className="text-xl font-bold mb-10 text-gray-900 dark:text-white">
-        ADmyBRAND
+    <aside className="h-186 w-60 bg-[E3D9FF] shadow p-6 flex flex-col">
+      <h1 className="text-xl font-bold mb-10 text-black ">
+        <a href="https://us.admybrand.com/" target='_blank'><img src="https://us.admybrand.com/assets/svg/web_logo.svg" alt="admybrand logo" /></a>
+        
       </h1>
 
       <nav className="space-y-3">
@@ -31,7 +32,7 @@ export default function Sidebar() {
             key={href}
             href={href}
             className={cn(
-              'flex items-center gap-3 px-4 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition',
+              'flex items-center gap-3 px-4 py-2 rounded-md text-gray-700  hover:bg-[#E2DAFF] transition',
               pathname === href &&
                 'bg-gray-100 dark:bg-gray-800 text-black dark:text-white font-medium'
             )}

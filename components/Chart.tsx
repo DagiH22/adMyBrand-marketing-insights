@@ -58,8 +58,20 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
       <LineChart data={data}>
         <XAxis dataKey={labelKey} />
         <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey={dataKey} stroke="#8884d8" />
+        <Tooltip
+  content={({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+          <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+        </div>
+      );
+    }
+    return null;
+  }}
+/>
+
+        <Line type="monotone" dataKey={dataKey} stroke="#06B6D4 " width={2}/>
       </LineChart>
     );
   } else if (type === 'bar') {
@@ -67,7 +79,19 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
       <BarChart data={data}>
         <XAxis dataKey={labelKey} />
         <YAxis />
-        <Tooltip />
+        <Tooltip
+  content={({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+          <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+        </div>
+      );
+    }
+    return null;
+  }}
+/>
+
         <Bar dataKey={dataKey} fill="#82ca9d" />
       </BarChart>
     );
@@ -91,7 +115,19 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip
+  content={({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+          <p>{`${payload[0].name ?? payload[0].payload[labelKey]}: ${payload[0].value}`}</p>
+        </div>
+      );
+    }
+    return null;
+  }}
+/>
+
           <Legend
             layout="vertical"
             verticalAlign="middle"
@@ -105,7 +141,7 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
   }
 
   return (
-    <div className={`p-4 bg-card shadow rounded-xl ${className || ''}`}>
+    <div className={`p-4 bg-[#FAF9FF] shadow rounded-xl transition-transform duration-300 ease-in-out hover:scale-[1.01] hover:shadow-lg ${className || ''}`}>
       <h3 className="text-lg font-semibold mb-2">{title}</h3>
       <div className="w-full h-[135px]">
         <ResponsiveContainer width="100%" height="100%">
