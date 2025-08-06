@@ -63,4 +63,75 @@
 ---
 
 ## 📁 Project Structure
+```bash
+admybrand-insight/
+├── app/
+│   ├── dashboard/
+│   │   ├── overview/
+│   │   │   └── page.tsx
+│   │   ├── report/
+│   │   │   └── page.tsx
+│   │   ├── settings/
+│   │   │   └── page.tsx
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── components/
+│   ├── Chart.tsx
+│   ├── DataTable.tsx
+│   ├── ExportButton.tsx
+│   ├── MetricCard.tsx
+│   ├── Navbar.tsx
+│   ├── Sidebar.tsx
+│   └── ui/
+│       ├── button.tsx
+│       ├── card.tsx
+│       ├── input.tsx
+│       └── switch.tsx
+│
+├── data/
+│   ├── mockCharts.ts
+│   ├── mockMetrics.ts
+│   └── mockTable.ts
+│
+├── lib/
+│   └── utils.ts
+│
+├── public/
+│
+├── .gitignore
+├── package.json
+├── tsconfig.json
+├── next.config.js
+├── eslint.config.js
+└── README.md
 
+
+---
+
+## 🧱 Component Highlights
+
+- `<MetricCard />` – Reusable card for KPIs
+- `<Chart />` – Supports line, bar, and pie types
+- `<DataTable />` – Fully sortable/filterable with pagination
+- `<ExportButton />` – PDF/CSV export functionality
+- `<ThemeToggle />` – Light/Dark theme switcher
+
+---
+
+## ⚙️ Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/admybrand-insights.git
+
+# Navigate into the project
+cd admybrand-insights
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
