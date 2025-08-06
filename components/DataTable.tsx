@@ -12,7 +12,7 @@ interface TableProps {
   }[]
 }
 
-const ITEMS_PER_PAGE = 10
+const ITEMS_PER_PAGE = 4
 
 type SortKey = keyof TableProps["data"][0]
 type SortDirection = "asc" | "desc"
@@ -61,8 +61,37 @@ export default function DataTable({ data }: TableProps) {
   // }
 
   return (
-    <div className="overflow-x-auto bg-card p-4 rounded-xl shadow">
-      <table className="min-w-full text-sm text-left">
+    <div className="overflow-x-auto bg-card p-3 px-4 rounded-xl shadow">
+      <div className="flex items-center justify-between relative w-full">
+  {/* Heading - stick to left */}
+  <h2 className="text-lg font-semibold w-fit">Recent Signups</h2>
+
+  {/* Spacer to push the next div to center */}
+  <div className="flex-1 flex justify-center absolute inset-0">
+    <div className="flex items-center gap-4">
+      <button
+        onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+        disabled={currentPage === 1}
+        className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50"
+      >
+        Previous
+      </button>
+      <span className="text-sm text-muted-foreground">
+        {currentPage}/{totalPages}
+      </span>
+      <button
+        onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+        disabled={currentPage === totalPages}
+        className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+
+      
+      <table className="min-w-full text-sm text-left py-1  bg-black-500">
       <thead>
   <tr>
     {["name", "email", "revenue", "status", "signupDate"].map((key) => (
@@ -96,26 +125,7 @@ export default function DataTable({ data }: TableProps) {
         </tbody>
       </table>
 
-      {/* Pagination Controls */}
-      <div className="flex justify-center  gap-4 items-center mt-4">
-        <button
-          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-          disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-900 cursor-pointer rounded disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <span className="text-sm text-muted-foreground">
-           {currentPage}/{totalPages}
-        </span>
-        <button
-          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-          disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-900 cursor-pointer rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+      
     </div>
   )
 }

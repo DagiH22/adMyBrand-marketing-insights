@@ -20,7 +20,7 @@ export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="h-screen w-60 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 p-6 flex flex-col">
+    <aside className="h-186 w-60 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 p-6 flex flex-col">
       <h1 className="text-xl font-bold mb-10 text-gray-900 dark:text-white">
         ADmyBRAND
       </h1>

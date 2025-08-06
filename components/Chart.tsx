@@ -6,21 +6,51 @@ import {
   PieChart, Pie, Cell,
   XAxis, YAxis,
   Tooltip, Legend,
-  ResponsiveContainer
-} from 'recharts'
-import type { ReactElement } from 'react'
+  ResponsiveContainer,
+  Sector
+} from 'recharts';
+import type { ReactElement } from 'react';
 
 interface ChartProps {
-  title: string
-  type: 'line' | 'bar' | 'pie'
-  data: any[]
-  dataKey: string
-  labelKey: string
+  title: string;
+  type: 'line' | 'bar' | 'pie';
+  data: any[];
+  dataKey: string;
+  labelKey: string;
+  className?: string;
+  activeIndex?: number | null;
 }
 
-const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042']
+const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042'];
 
-export default function Chart({ title, type, data, dataKey, labelKey }: ChartProps) {
+export default function Chart({ title, type, data, dataKey, labelKey, className }: ChartProps) {
+  const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
+
+  const renderActiveShape = (props: any) => {
+    const RADIAN = Math.PI / 180;
+    const {
+      cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
+      fill, payload
+    } = props;
+
+    return (
+      <g>
+        {/* <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+          {payload[labelKey]}
+        </text> */}
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius + 10}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+      </g>
+    );
+  };
+
   let chart: ReactElement;
 
   if (type === 'line') {
@@ -31,7 +61,7 @@ export default function Chart({ title, type, data, dataKey, labelKey }: ChartPro
         <Tooltip />
         <Line type="monotone" dataKey={dataKey} stroke="#8884d8" />
       </LineChart>
-    )
+    );
   } else if (type === 'bar') {
     chart = (
       <BarChart data={data}>
@@ -40,39 +70,48 @@ export default function Chart({ title, type, data, dataKey, labelKey }: ChartPro
         <Tooltip />
         <Bar dataKey={dataKey} fill="#82ca9d" />
       </BarChart>
-    )
+    );
   } else if (type === 'pie') {
     chart = (
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey={dataKey}
-          nameKey={labelKey}
-          cx="50%"
-          cy="50%"
-          outerRadius={80}
-        >
-          {data.map((_, index) => (
-            <Cell key={index} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-        <Legend />
-      </PieChart>
-    )
+      <div className="flex items-center justify-center">
+        <PieChart width={300} height={200}>
+          <Pie
+            data={data}
+            dataKey={dataKey}
+            nameKey={labelKey}
+            cx="40%"
+            cy="50%"
+            outerRadius={60}
+            activeIndex={activeIndex ?? -1}
+            activeShape={renderActiveShape}
+            onMouseEnter={(_, index) => setActiveIndex(index)}
+            onMouseLeave={() => setActiveIndex(null)}
+          >
+            {data.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend
+            layout="vertical"
+            verticalAlign="middle"
+            align="right"
+          />
+        </PieChart>
+      </div>
+    );
   } else {
-    // fallback (optional)
-    chart = <></>  // or throw new Error("Invalid chart type")
+    chart = <></>; // fallback
   }
 
   return (
-    <div className="p-4 bg-card shadow rounded-xl">
+    <div className={`p-4 bg-card shadow rounded-xl ${className || ''}`}>
       <h3 className="text-lg font-semibold mb-2">{title}</h3>
-      <div className="w-100% h-[200px]">
+      <div className="w-full h-[135px]">
         <ResponsiveContainer width="100%" height="100%">
           {chart}
         </ResponsiveContainer>
       </div>
     </div>
-  )
+  );
 }
