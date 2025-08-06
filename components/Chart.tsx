@@ -10,7 +10,6 @@ import {
   Sector
 } from 'recharts';
 import type { ReactElement } from 'react';
-import type {  TooltipProps } from 'recharts';
 interface PieActiveShapeProps {
   cx?: number;
   cy?: number;
