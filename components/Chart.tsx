@@ -80,14 +80,14 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
 
   if (type === 'line') {
     chart = (
-      <LineChart data={data}>
-        <XAxis dataKey={labelKey} />
-        <YAxis />
+      <LineChart data={data} className="max-md:p-0">
+        <XAxis dataKey={labelKey} className="max-md:text-[10px]" />
+        <YAxis className="max-md:text-[10px] max-md:ml-0" />
         <Tooltip
           content={({ active, payload }: CustomTooltipProps) => {
             if (active && payload && payload.length) {
               return (
-                <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+                <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5 max-md:text-xs">
                  <p>{`
   ${payload[0]?.name ?? payload[0]?.payload?.[labelKey as keyof typeof payload[0]['payload']] ?? ''}
   : ${payload[0]?.value ?? ''}
@@ -104,14 +104,14 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
     );
   } else if (type === 'bar') {
     chart = (
-      <BarChart data={data}>
+      <BarChart data={data} className="max-md:p-0 max-md:m-0 max-md:text-[10px] max-md:w-[150%]"> 
         <XAxis dataKey={labelKey} />
         <YAxis />
         <Tooltip
          content={({ active, payload }: CustomTooltipProps) => {
           if (active && payload && payload.length && payload[0]) {
             return (
-              <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+              <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5 max-md:text-xs">
                 <p>{`
   ${payload[0]?.name ?? payload[0]?.payload?.[labelKey as keyof typeof payload[0]['payload']] ?? ''}
   : ${payload[0]?.value ?? ''}
@@ -145,14 +145,14 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
   } as unknown as Partial<PieProps>)}
 >
             {data.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell className="text-[5px]" key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip
             content={({ active, payload }: CustomTooltipProps) => {
               if (active && payload && payload.length) {
                 return (
-                  <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5">
+                  <div className="bg-white text-sm text-gray-700 shadow-md border border-gray-200 rounded px-3 py-1.5 max-md:text-xs">
                     <p>{`
   ${payload[0]?.name ?? payload[0]?.payload?.[labelKey as keyof typeof payload[0]['payload']] ?? ''}
   : ${payload[0]?.value ?? ''}

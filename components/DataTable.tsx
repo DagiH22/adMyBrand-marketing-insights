@@ -62,49 +62,51 @@ export default function DataTable({ data , page }: TableProps) {
   // }
 
   return (
-    <div className="overflow-x-auto bg-white p-3 px-4 rounded-xl shadow">
-      <div className="flex items-center justify-between relative w-full">
+    <div className="overflow-x-auto bg-white p-3 px-4 rounded-xl shadow max-md:h-[100%] ">
+      <div className="flex items-center justify-between relative w-full max-md:static max-md:gap-5">
   {/* Heading - stick to left */}
-  <h2 className="text-lg font-semibold w-fit">Recent Signups</h2>
+        <h2 className="text-lg font-semibold w-fit max-md:text-xl">Recent Signups</h2>
 
   {/* Spacer to push the next div to center */}
-  <div className="flex-1 flex justify-center absolute inset-0">
-    <div className="flex items-center gap-4">
-      <button
-        onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-        disabled={currentPage === 1}
-        className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50"
-      >
-        Previous
-      </button>
-      <span className="text-sm text-muted-foreground">
-        {currentPage}/{totalPages}
-      </span>
-      <button
-        onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-        disabled={currentPage === totalPages}
-        className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50"
-      >
-        Next
-      </button>
-    </div>
-  </div>
+      <div className="flex-1 flex justify-center absolute md:inset-0 max-md:top-2 max-md:left-1/2 max-md:transform max-md:-translate-x-1/2 max-md: max-md:h-fit max-md:w-fit">
+        <div className="flex items-center gap-4 max-md:text-xs">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50 "
+              >
+                Previous
+              </button>
+              
+              <span className="text-sm text-muted-foreground">
+                {currentPage}/{totalPages}
+              </span>
+
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50"
+              >
+                Next
+              </button>
+        </div>
+      </div>
 </div>
 
       
-      <table className="min-w-full text-sm text-left py-1  bg-black-500">
+      <table className="min-w-fit text-sm text-left py-1  bg-black-500 max-md:text-xs">
       <thead>
   <tr>
     {["name", "email", "revenue", "status", "signupDate"].map((key) => (
       <th
         key={key}
-        className="px-4 py-2 cursor-pointer select-none text-left"
+        className="px-4 py-2 cursor-pointer select-none text-left "
         onClick={() => handleSort(key as SortKey)}
       >
         <div className="flex items-center gap-3 capitalize">
           {key}
           {sortKey === key && (
-            <span className="text-xs">
+            <span className="text-sm">
               {sortDirection === "asc" ? "^" : "˅"}
             </span>
           )}
@@ -115,7 +117,7 @@ export default function DataTable({ data , page }: TableProps) {
 </thead>
         <tbody>
           {paginatedData.map((row) => (
-            <tr key={row.id} className="border-t hover:bg-[#f0ebff] transition-colors">
+            <tr key={row.id} className="border-t hover:bg-[#f0ebff] transition-colors ">
               <td className="px-4 py-2">{row.name}</td>
               <td className="px-4 py-2">{row.email}</td>
               <td className="px-4 py-2">{row.revenue}</td>

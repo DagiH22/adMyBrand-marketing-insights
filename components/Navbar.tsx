@@ -32,7 +32,7 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className="flex justify-between items-center px-6 py-4 shadow relative">
+    <nav className="flex justify-between items-center px-6 py-4 shadow relative max-md:hidden">
       <h1 className="text-xl font-bold">{pageTitle}</h1>
 
 
