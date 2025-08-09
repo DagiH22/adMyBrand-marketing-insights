@@ -42,27 +42,26 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="flex h-screen bg-[#F4F0FF]">
-      <aside className="sticky top-0 h-screen overflow-y-auto bg-[#F4F0FF] w-[250px] shadow-lg z-30">
+    <div className="flex max-md:flex-col h-screen bg-[#F4F0FF]">
+      <aside className="sticky top-0 h-screen max-md:h-fit max-md:w-[100%] overflow-y-auto bg-[#F4F0FF] w-[250px] shadow-lg z-30">
         <Sidebar />
       </aside>
       <div className="flex-1 bg-[#F4F0FF]">
-
-
-        <div className="p-6 space-y-6 ">
-          <div className="flex justify-between items-start w-[40%]">
+        <div className="p-6 max-md:p-2 space-y-6 max-md:space-y-4">
+          <div className="flex justify-between items-start w-[40%] max-md:w-[100%]">
             <div>
               <h1 className="text-2xl font-bold mb-1">Settings</h1>
               <p className="text-sm text-muted-foreground">Manage your preferences</p>
             </div>
             {!editing && (
-              <Button onClick={() => setEditing(true)} variant="outline">
+              <button onClick={() => setEditing(true)}  className='max-md:mr-3 text-black 
+              inline-flex items-center justify-center rounded-md bg-px-3 px-3 py-1.5 text-sm font-medium cursor-pointer disabled:opacity-50 disabled:pointer-events-none'>
                 Edit
-              </Button>
+              </button>
             )}
           </div>
 
-          <div className="p-6 rounded-xl shadow space-y-6 w-[40%] bg-[#FAF9FF]">
+          <div className="p-6 rounded-xl shadow space-y-6 w-[40%] max-md:w-[100%] bg-[#FAF9FF]">
             <div className="space-y-2">
               <label className="block font-semibold text-sm">Name</label>
               <input
@@ -86,13 +85,14 @@ export default function SettingsPage() {
             </div>
 
             {editing && (
-              <Button onClick={handleSave} className="mt-4">
+              <button onClick={handleSave} className="mt-4 inline-flex items-center justify-center rounded-md bg-px-3 px-3 py-1.5 text-sm font-medium  bg-blue-600
+                 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer disabled:opacity-50 disabled:pointer-events-none" >
                 Save
-              </Button>
+              </button>
             )}
           </div>
 
-          <div className=" p-6 rounded-xl shadow space-y-6 w-[40%] bg-[#FAF9FF]">
+          <div className=" p-6 rounded-xl shadow space-y-6 w-[40%] max-md:w-[100%] bg-[#FAF9FF]">
             <h2 className="text-lg font-bold">Preferences</h2>
 
             <div className="flex items-center justify-between">

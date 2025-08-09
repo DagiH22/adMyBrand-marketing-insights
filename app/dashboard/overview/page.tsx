@@ -14,11 +14,6 @@ import Sidebar from "@/components/Sidebar";
 export default function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#F4F0FF]">
-      {/* Navbar only for desktop */}
-      <div className="w-[85%] hidden  max-xl:w-[77%] max-lg:w-[70%] bg-[#F4F0FF] absolute right-0 max-md:hidden">
-        <Navbar />   
-      </div>
-
       <div className="flex flex-1 overflow-hidden flex-col md:flex-row  ">
         {/* Sidebar */}
         <aside className="sticky top-0  max-md:static md:h-screen overflow-y-auto bg-[#F4F0FF] w-[15%] max-lg:w-[30%] max-xl:w-[23%] max-md:w-[100%] shadow-lg z-30">
@@ -26,7 +21,7 @@ export default function DashboardPage() {
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 p-4 bg-[#F4F0FF] overflow-y-auto md:mt-[0px] max-md:p-2 max-fold:bg-red-500">
+        <main className="flex-1 p-4 bg-[#F4F0FF] overflow-y-auto md:mt-[0px] max-md:p-2 pt-8  max-fold:bg-red-500">
           {/* KPI + Line Chart */}
           <div className="grid lg:grid-cols-4 max-lg:grid-cols-1  max-2xl:grid-cols-5 gap-4 mb-4 w-full ">
             {/* KPI Cards */}
@@ -76,7 +71,7 @@ export default function DashboardPage() {
 
           {/* Data Table */}
           <div className="bg-white p-4 pb-2 rounded-xl shadow max-md:relative max-md:h-[360px] max-md:p-2 max-md:pt-10">
-            <DataTable data={tableData} page={4} />
+            <DataTable data={tableData} page={5} />
           </div>
         </main>
       </div>

@@ -60,21 +60,18 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F4F0FF]">
+    <div className="flex max-md:flex-col max-md:relative h-screen overflow-hidden bg-[#F4F0FF]">
       {/* Sticky Sidebar */}
-      <aside className="sticky top-0 h-screen overflow-y-auto bg-[#F4F0FF] w-[250px] shadow-lg z-30">
+      <aside className="sticky max-md:static top-0 h-100% overflow-y-auto bg-[#F4F0FF] w-[250px] max-md:w-[100%] shadow-lg z-30">
         <Sidebar />
       </aside>
 
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 overflow-hidden">
-        {/* Sticky Navbar */}
-        <header className=" hidden sticky top-0 z-20 bg-[#F4F0FF] shadow-sm">
-          <Navbar />
-        </header>
+  
 
         {/* Scrollable Page Content */}
-        <main className="flex-1 p-4 overflow-y-auto space-y-6">
+        <main className="flex-1 p-4 max-md:p-2 overflow-y-auto space-y-6 max-md:space-y-4">
           {/* Charts */}
           <div className="w-full col-span-3 h-fit">
               <Chart
@@ -111,20 +108,20 @@ export default function ReportsPage() {
             value={filter}
             onChange={e => setFilter(e.target.value)}
             placeholder="Filter data..."
-            className="px-4 py-2 rounded border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#06B6D4] w-[25%]"
+            className="px-4 py-2 max-md:p-2 max-md:w-[75%] max-md:px-3 max-md:py-1.5  rounded border border-gray-400 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#06B6D4] w-[25%]"
           />
 
 
             <div className="flex gap-2">
               <button
                 onClick={exportToCSV}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                className="px-4 py-2 max-md:px-2 max-md:py-1 max-md:text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition"
               >
                 Export CSV
               </button>
               <button
                 onClick={exportToPDF}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                className="px-4 py-2 max-md:px-2 max-md:py-1 max-md:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition"
               >
                 Export PDF
               </button>
@@ -132,7 +129,7 @@ export default function ReportsPage() {
           </div>
 
           {/* Data Table */}
-          <div className="bg-white p-4 rounded-xl shadow">
+          <div className="bg-white  p-4 rounded-xl max-md:relative max-md:p-2 max-md:pt-10 shadow">
             <DataTable data={filteredData} page={10} />
           </div>
         </main>
