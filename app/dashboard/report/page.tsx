@@ -62,16 +62,14 @@ export default function ReportsPage() {
   return (
     <div className="flex max-md:flex-col max-md:relative h-screen overflow-hidden bg-[#F4F0FF]">
       {/* Sticky Sidebar */}
-      <aside className="sticky max-md:static top-0 h-100% overflow-y-auto bg-[#F4F0FF] w-[250px] max-md:w-[100%] shadow-lg z-30">
+      <aside className="sticky max-md:static top-0 h-100% overflow-y-auto bg-[#F4F0FF] max-md:w-[100%] shadow-lg z-30">
         <Sidebar />
       </aside>
 
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 overflow-hidden">
-  
-
         {/* Scrollable Page Content */}
-        <main className="flex-1 p-4 max-md:p-2 overflow-y-auto space-y-6 max-md:space-y-4">
+        <main className="flex-1 p-4 pt-8 max-md:p-2 overflow-y-auto space-y-6 max-md:space-y-4">
           {/* Charts */}
           <div className="w-full col-span-3 h-fit">
               <Chart

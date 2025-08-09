@@ -42,12 +42,12 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="flex max-md:flex-col h-screen bg-[#F4F0FF]">
-      <aside className="sticky top-0 h-screen max-md:h-fit max-md:w-[100%] overflow-y-auto bg-[#F4F0FF] w-[250px] shadow-lg z-30">
+    <div className="flex max-md:flex-col max-md:relative h-screen bg-[#F4F0FF]">
+      <aside className="sticky max-md:static top-0 h-screen max-md:h-fit max-md:w-[100%] overflow-y-auto bg-[#F4F0FF] shadow-lg z-30">
         <Sidebar />
       </aside>
-      <div className="flex-1 bg-[#F4F0FF]">
-        <div className="p-6 max-md:p-2 space-y-6 max-md:space-y-4">
+      <div className="flex-1  bg-[#F4F0FF]">
+        <div className="p-4 pt-8 max-md:p-2 space-y-6 max-md:space-y-4">
           <div className="flex justify-between items-start w-[40%] max-md:w-[100%]">
             <div>
               <h1 className="text-2xl font-bold mb-1">Settings</h1>

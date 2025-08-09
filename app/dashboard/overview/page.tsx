@@ -16,7 +16,7 @@ export default function DashboardPage() {
     <div className="flex flex-col min-h-screen bg-[#F4F0FF]">
       <div className="flex flex-1 overflow-hidden flex-col md:flex-row  ">
         {/* Sidebar */}
-        <aside className="sticky top-0  max-md:static md:h-screen overflow-y-auto bg-[#F4F0FF] w-[15%] max-lg:w-[30%] max-xl:w-[23%] max-md:w-[100%] shadow-lg z-30">
+        <aside className="sticky top-0  max-md:static md:h-screen overflow-y-auto bg-[#F4F0FF]  max-md:w-[100%] shadow-lg z-30">
           <Sidebar />
         </aside>
 
