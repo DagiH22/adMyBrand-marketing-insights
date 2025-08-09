@@ -62,13 +62,13 @@ export default function DataTable({ data , page }: TableProps) {
   // }
 
   return (
-    <div className="overflow-x-auto bg-white p-3 px-4 rounded-xl shadow max-md:h-[100%] ">
+    <div className="overflow-x-auto bg-white pt-2 pb-0 mb-0 px-4 rounded-xl shadow max-md:h-[100%] ">
       <div className="flex items-center justify-between relative w-full max-md:static max-md:gap-5">
   {/* Heading - stick to left */}
         <h2 className="text-lg font-semibold w-fit max-md:text-xl">Recent Signups</h2>
 
   {/* Spacer to push the next div to center */}
-      <div className="flex-1 flex justify-center absolute md:inset-0 max-md:top-2 max-md:left-1/2 max-md:transform max-md:-translate-x-1/2 max-md: max-md:h-fit max-md:w-fit">
+      <div className="flex-1 flex justify-between absolute  left-1/2 max-lg:left-2/3 transform -translate-x-1/2 max-md:top-2 max-md:left-1/2 max-md:transform max-md:-translate-x-1/2 max-md: max-md:h-fit max-md:w-fit">
         <div className="flex items-center gap-4 max-md:text-xs">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
@@ -94,7 +94,7 @@ export default function DataTable({ data , page }: TableProps) {
 </div>
 
       
-      <table className="min-w-fit text-sm text-left py-1  bg-black-500 max-md:text-xs">
+      <table className="min-w-fit text-sm text-left py-1 my-4  bg-black-500 max-md:text-xs">
       <thead>
   <tr>
     {["name", "email", "revenue", "status", "signupDate"].map((key) => (
@@ -103,7 +103,7 @@ export default function DataTable({ data , page }: TableProps) {
         className="px-4 py-2 cursor-pointer select-none text-left "
         onClick={() => handleSort(key as SortKey)}
       >
-        <div className="flex items-center gap-3 capitalize">
+        <div className="flex items-center  gap-3 capitalize">
           {key}
           {sortKey === key && (
             <span className="text-sm">
@@ -117,7 +117,7 @@ export default function DataTable({ data , page }: TableProps) {
 </thead>
         <tbody>
           {paginatedData.map((row) => (
-            <tr key={row.id} className="border-t hover:bg-[#f0ebff] transition-colors ">
+            <tr key={row.id} className="border-t hover:bg-[#f0ebff] transition-colors  ">
               <td className="px-4 py-2">{row.name}</td>
               <td className="px-4 py-2">{row.email}</td>
               <td className="px-4 py-2">{row.revenue}</td>

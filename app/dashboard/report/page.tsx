@@ -69,7 +69,7 @@ export default function ReportsPage() {
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Sticky Navbar */}
-        <header className="sticky top-0 z-20 bg-[#F4F0FF] shadow-sm">
+        <header className=" hidden sticky top-0 z-20 bg-[#F4F0FF] shadow-sm">
           <Navbar />
         </header>
 

@@ -9,6 +9,10 @@ module.exports = {
         fontFamily: {
           sans: ['var(--font-inter)', 'sans-serif'], // Inter from next/font
         },
+        screens:{
+          xs:'281px',
+          'max-xs':{max:'281px'}
+        },
         colors: {
           light: {
             background: '#FFFFFF',

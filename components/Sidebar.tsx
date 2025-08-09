@@ -25,7 +25,7 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <aside className="h-full w-60 shadow p-6 flex flex-col bg-[#F4F0FF] max-md:w-full max-md:p-3 max-md:static">
+    <aside className="h-full max-xl:w-60 xl:w-[100%] shadow p-6 flex flex-col bg-[#F4F0FF] max-md:w-full max-md:p-3 max-md:static">
       {/* Logo & Hamburger */}
       <div className="flex items-center justify-between max-md:w-full">
         <a href="https://us.admybrand.com/" target='_blank'>
@@ -53,7 +53,7 @@ export default function Sidebar() {
           "mt-8 space-y-3 md:space-y-3",
           "md:block", // always show on desktop
           isOpen ? "block max-md:mt-4" : "hidden md:block", // toggle on mobile
-          "max-md:flex max-md:flex-col max-md:gap-2 max-md:bg-white max-md:rounded-lg max-md:shadow-lg max-md:p-3 max-md:text-sm max-md:w-fit max-md:absolute max-md:top-11 max-md:right-2 max-md:m-0 max-md:z-50 max-md:bg-[ rgba(255, 255, 255)] max-md:text-black"
+          "w-[40] max-md:flex max-md:flex-col max-md:gap-2 max-md:bg-white max-md:rounded-lg max-md:shadow-lg max-md:p-3 max-md:text-sm  max-md:absolute max-md:top-11 max-md:right-2 max-md:m-0 max-md:z-50 max-md:bg-[ rgba(255, 255, 255)] max-md:text-black"
         )}
       >
         {navItems.map(({ name, href, icon: Icon }) => (

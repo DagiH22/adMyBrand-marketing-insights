@@ -47,7 +47,7 @@ export default function SettingsPage() {
         <Sidebar />
       </aside>
       <div className="flex-1 bg-[#F4F0FF]">
-        <Navbar />
+
 
         <div className="p-6 space-y-6 ">
           <div className="flex justify-between items-start w-[40%]">
