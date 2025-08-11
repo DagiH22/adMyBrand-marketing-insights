@@ -126,7 +126,7 @@ export default function ReportsPage() {
           </div>
 
           {/* Data Table */}
-          <div className="bg-white  p-4 rounded-xl max-md:relative max-md:p-2 max-md:pt-10 shadow">
+          <div className="bg-white  p-4 rounded-xl max-md:relative max-md:p-2 max-md:pt-12 shadow">
             <DataTable key={filter + filteredData.length} data={filteredData} page={10} />
           </div>
         </main>

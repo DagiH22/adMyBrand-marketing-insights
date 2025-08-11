@@ -54,12 +54,12 @@ export default function DataTable({ data , page }: TableProps) {
 
   return (
     <div className="bg-white rounded-xl shadow-md p-4 max-w-full overflow-x-auto">
-      <div className="flex flex-col md:flex-row items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-gray-900 mb-3 md:mb-0">
+      <div className="flex md:flex-row items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-gray-900 mb-3 max-md: md:mb-0">
           Recent Signups
         </h2>
 
-        <div className="flex items-center gap-3 text-gray-700">
+        <div className="flex items-center max-md:absolute top-4 right-2 gap-3 text-gray-700">
           <button
             onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
             disabled={currentPage === 1}

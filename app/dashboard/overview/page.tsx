@@ -68,7 +68,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Data Table */}
-          <div className="bg-white p-4 pb-2 rounded-xl shadow max-md:relative max-md:h-[360px] max-md:p-2 max-md:pt-10">
+          <div className="bg-white p-4 pb-2 rounded-xl shadow max-md:relative max-md:p-2 max-md:pt-12">
             <DataTable data={tableData} page={4} />
           </div>
         </main>
