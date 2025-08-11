@@ -1,7 +1,6 @@
-// app/dashboard/report/page.tsx
 'use client'
 import * as React from 'react'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Sidebar from '@/components/Sidebar'
 import Chart from '@/components/Chart'
 import DataTable from '@/components/DataTable'
@@ -12,6 +11,8 @@ import autoTable from 'jspdf-autotable'
 
 export default function ReportsPage() {
   const [filter, setFilter] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+
   const filteredData = useMemo(() => {
     if (!filter) return originalData
     return originalData.filter(row =>
@@ -21,18 +22,23 @@ export default function ReportsPage() {
     )
   }, [filter])
 
+  // Reset page when filter changes
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [filter])
+
   // Export to CSV
   const exportToCSV = () => {
     const headers = Object.keys(originalData[0]) as (keyof typeof originalData[0])[];
     const csvRows = [
-      headers.join(','), 
+      headers.join(','),
       ...filteredData.map(row =>
         headers.map(field => JSON.stringify(row[field] ?? '')).join(',')
       ),
     ];
     const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
-  
+
     const a = document.createElement('a');
     a.href = url;
     a.download = 'report.csv';
@@ -70,7 +76,6 @@ export default function ReportsPage() {
         <main className="flex-1 p-4 pt-8 max-md:p-2 overflow-y-auto space-y-6 max-md:space-y-4">
           {/* Charts */}
           <div className="w-full col-span-3 h-fit">
-              {/* Line Chart */}
               <Chart
                 title="Revenue Over Time"
                 type="line"
@@ -82,7 +87,6 @@ export default function ReportsPage() {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {/* Bar Chart */}
             <Chart
               title="Conversions by Channel"
               type="bar"
@@ -90,7 +94,6 @@ export default function ReportsPage() {
               dataKey="conversions"
               labelKey="channel"
             />
-            {/* Pie */}
             <Chart
               title="Traffic Sources"
               type="pie"
@@ -102,24 +105,21 @@ export default function ReportsPage() {
 
           {/* Filter + Export */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 ">
-          <input
-            type="text"
-            value={filter}
-            onChange={e => setFilter(e.target.value)}
-            placeholder="Filter data..."
-            className="px-4 py-2 max-md:p-2 max-md:w-[75%] max-md:px-3 max-md:py-1.5  rounded border border-gray-400 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#06B6D4] w-[25%]"
-          />
+            <input
+              type="text"
+              value={filter}
+              onChange={e => setFilter(e.target.value)}
+              placeholder="Filter data..."
+              className="px-4 py-2 max-md:p-2 max-md:w-[75%] max-md:px-3 max-md:py-1.5  rounded border border-gray-400 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#06B6D4] w-[25%]"
+            />
 
-            {/* Export buttons */}
             <div className="flex gap-2">
-              {/* Export as csv */}
               <button
                 onClick={exportToCSV}
                 className="px-4 py-2 max-md:px-2 max-md:py-1 max-md:text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition"
               >
                 Export CSV
               </button>
-              {/* Export as pdf */}
               <button
                 onClick={exportToPDF}
                 className="px-4 py-2 max-md:px-2 max-md:py-1 max-md:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition"
@@ -130,8 +130,9 @@ export default function ReportsPage() {
           </div>
 
           {/* Data Table */}
-          <div className="bg-white  p-4 rounded-xl max-md:relative max-md:p-2 max-md:pt-10 shadow">
-            <DataTable data={filteredData} page={10} />
+          <div className="bg-white p-4 rounded-xl max-md:relative max-md:p-2 max-md:pt-10 shadow">
+            {/* Pass currentPage and total pages from filteredData */}
+            <DataTable data={filteredData} page={10} currentPage={currentPage} onPageChange={setCurrentPage} />
           </div>
         </main>
       </div>

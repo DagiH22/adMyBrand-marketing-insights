@@ -1,5 +1,7 @@
 // app/dashboard/overview/page.tsx
+'use client'
 import * as React from "react";
+import { useState } from "react";
 import { metrics } from '@/data/mockMetrics'
 import { revenueOverTime, conversionsByChannel, trafficSources } from '@/data/mockCharts'
 import { tableData } from '@/data/mockTable'
@@ -9,6 +11,7 @@ import DataTable from '@/components/DataTable'
 import Sidebar from "@/components/Sidebar";
 
 export default function DashboardPage() {
+  const [currentPage, setCurrentPage] = useState(1)
   return (
     <div className="flex max-md:flex-col max-md:relative h-screen overflow-hidden bg-[#F4F0FF]">
       {/* Sticky Sidebar */}
@@ -68,7 +71,7 @@ export default function DashboardPage() {
 
           {/* Data Table */}
           <div className="bg-white p-3 pb-2 rounded-xl shadow max-md:relative max-md:h-[360px] max-md:p-2 max-md:pt-10">
-            <DataTable data={tableData} page={5} />
+            <DataTable data={tableData} page={5} currentPage={currentPage} onPageChange={setCurrentPage} />
           </div>
         </main>
       </div>
