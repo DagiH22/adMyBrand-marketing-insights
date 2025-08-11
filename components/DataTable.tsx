@@ -13,7 +13,6 @@ interface TableProps {
   page?: number
 }
 
-
 type SortKey = keyof TableProps["data"][0]
 type SortDirection = "asc" | "desc"
 
@@ -27,24 +26,21 @@ export default function DataTable({ data , page }: TableProps) {
 
   const handleSort = (key: SortKey) => {
     if (key === sortKey) {
-      // Toggle direction if same column is clicked again
       setSortDirection(prev => (prev === "asc" ? "desc" : "asc"))
     } else {
-      // New sort column
       setSortKey(key)
       setSortDirection("asc")
     }
-    setCurrentPage(1) // Reset to page 1 on new sort
+    setCurrentPage(1)
   }
 
   const sortedData = [...data].sort((a, b) => {
     const aVal = a[sortKey]
     const bVal = b[sortKey]
 
-    // Handle numeric sort if revenue
     const isNumeric = sortKey === "revenue"
-    const valA = isNumeric ? parseFloat(aVal.replace(/[^0-9.-]+/g, "")) : aVal
-    const valB = isNumeric ? parseFloat(bVal.replace(/[^0-9.-]+/g, "")) : bVal
+    const valA = isNumeric ? parseFloat(aVal.replace(/[^0-9.-]+/g, "")) : aVal.toString().toLowerCase()
+    const valB = isNumeric ? parseFloat(bVal.replace(/[^0-9.-]+/g, "")) : bVal.toString().toLowerCase()
 
     if (valA < valB) return sortDirection === "asc" ? -1 : 1
     if (valA > valB) return sortDirection === "asc" ? 1 : -1
@@ -56,76 +52,82 @@ export default function DataTable({ data , page }: TableProps) {
     currentPage * ITEMS_PER_PAGE
   )
 
-
-
   return (
-    <div className="overflow-x-auto bg-white pt-2 pb-0 mb-0 px-4 rounded-xl shadow max-md:h-[100%] ">
-      <div className="flex items-center justify-between relative w-full max-md:static max-md:gap-5">
-  {/* Heading - stick to left */}
-        <h2 className="text-lg font-semibold w-fit max-md:text-xl">Recent Signups</h2>
+    <div className="bg-white rounded-xl shadow-md p-4 max-w-full overflow-x-auto">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-gray-900 mb-3 md:mb-0">
+          Recent Signups
+        </h2>
 
-  {/* Spacer to push the next div to center */}
-      <div className="flex-1 flex justify-between absolute  left-1/2 max-lg:left-2/3 transform -translate-x-1/2 max-md:top-2 max-md:left-1/2 max-md:transform max-md:-translate-x-1/2 max-md: max-md:h-fit max-md:w-fit">
-        <div className="flex items-center gap-4 max-md:text-xs">
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                disabled={currentPage === 1}
-                className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50 "
-              >
-                Previous
-              </button>
-              
-              <span className="text-sm text-muted-foreground">
-                {currentPage}/{totalPages}
-              </span>
+        <div className="flex items-center gap-3 text-gray-700">
+          <button
+            onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-1 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 disabled:bg-indigo-300 disabled:cursor-not-allowed transition"
+          >
+            Previous
+          </button>
 
-              <button
-                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                disabled={currentPage === totalPages}
-                className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50"
-              >
-                Next
-              </button>
+          <span className="font-medium">
+            {currentPage} / {totalPages}
+          </span>
+
+          <button
+            onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 disabled:bg-indigo-300 disabled:cursor-not-allowed transition"
+          >
+            Next
+          </button>
         </div>
       </div>
-</div>
 
-      
-      <table className="min-w-fit text-sm text-left py-1 my-4  bg-black-500 max-md:text-xs">
-      <thead>
-  <tr>
-    {["name", "email", "revenue", "status", "signupDate"].map((key) => (
-      <th
-        key={key}
-        className="px-4 py-2 cursor-pointer select-none text-left "
-        onClick={() => handleSort(key as SortKey)}
-      >
-        <div className="flex items-center  gap-3 capitalize">
-          {key}
-          {sortKey === key && (
-            <span className="text-sm">
-              {sortDirection === "asc" ? "^" : "˅"}
-            </span>
-          )}
-        </div>
-      </th>
-    ))}
-  </tr>
-</thead>
+      <table className="w-full min-w-[600px] table-auto border-collapse text-sm md:text-base">
+        <thead className="bg-indigo-50">
+          <tr>
+            {["name", "email", "revenue", "status", "signupDate"].map((key) => (
+              <th
+                key={key}
+                onClick={() => handleSort(key as SortKey)}
+                className="cursor-pointer select-none px-4  text-left text-indigo-900 font-semibold tracking-wide hover:text-indigo-700"
+              >
+                <div className="flex items-center gap-2">
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                  {sortKey === key && (
+                    <span className="text-indigo-600 text-sm select-none">
+                      {sortDirection === "asc" ? "▲" : "▼"}
+                    </span>
+                  )}
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
-          {paginatedData.map((row) => (
-            <tr key={row.id} className="border-t hover:bg-[#f0ebff] transition-colors  ">
-              <td className="px-4 py-2">{row.name}</td>
-              <td className="px-4 py-2">{row.email}</td>
-              <td className="px-4 py-2">{row.revenue}</td>
-              <td className="px-4 py-2">{row.status}</td>
-              <td className="px-4 py-2">{row.signupDate}</td>
+          {paginatedData.map(row => (
+            <tr
+              key={row.id}
+              className="border-b last:border-none hover:bg-indigo-100 transition-colors"
+            >
+              <td className="px-4 py-2 text-gray-800">{row.name}</td>
+              <td className="px-4 py-2 text-gray-600">{row.email}</td>
+              <td className="px-4 py-2 text-indigo-700 font-medium">{row.revenue}</td>
+              <td className="px-4 py-2">
+                <span className={`inline-block px-2 py-1 rounded-full text-xs font-semibold ${
+                  row.status.toLowerCase() === "active"
+                    ? "bg-green-100 text-green-800"
+                    : row.status.toLowerCase() === "pending"
+                    ? "bg-yellow-100 text-yellow-800"
+                    : "bg-red-100 text-red-800"
+                }`}>
+                  {row.status}
+                </span>
+              </td>
+              <td className="px-4 py-2 text-gray-500">{row.signupDate}</td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      
     </div>
   )
 }
