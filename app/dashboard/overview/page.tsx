@@ -1,5 +1,4 @@
 // app/dashboard/overview/page.tsx
-'use client'
 import * as React from "react";
 import { useState } from "react";
 import { metrics } from '@/data/mockMetrics'
@@ -71,7 +70,7 @@ export default function DashboardPage() {
 
           {/* Data Table */}
           <div className="bg-white p-3 pb-2 rounded-xl shadow max-md:relative max-md:h-[360px] max-md:p-2 max-md:pt-10">
-            <DataTable data={tableData} page={5} currentPage={currentPage} onPageChange={setCurrentPage} />
+            <DataTable data={tableData} page={5}  />
           </div>
         </main>
       </div>

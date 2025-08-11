@@ -18,7 +18,7 @@ interface TableProps {
 type SortKey = keyof TableProps["data"][0]
 type SortDirection = "asc" | "desc"
 
-export default function DataTable({ data , page, currentPage, onPageChange }: TableProps) {
+export default function DataTable({ data , page}: TableProps) {
   const ITEMS_PER_PAGE = page ?? 4
   const [sortKey, setSortKey] = React.useState<SortKey>("name")
   const [sortDirection, setSortDirection] = React.useState<SortDirection>("asc")
@@ -33,7 +33,6 @@ export default function DataTable({ data , page, currentPage, onPageChange }: Ta
       setSortKey(key)
       setSortDirection("asc")
     }
-    onPageChange(1) // Reset to page 1 on new sort
   }
 
   const sortedData = React.useMemo(() => {
@@ -51,10 +50,7 @@ export default function DataTable({ data , page, currentPage, onPageChange }: Ta
     })
   }, [data, sortKey, sortDirection])
 
-  const paginatedData = sortedData.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  )
+
 
   return (
     <div className="overflow-x-auto bg-white pt-2 pb-0 mb-0 px-4 rounded-xl shadow max-md:h-[100%] ">

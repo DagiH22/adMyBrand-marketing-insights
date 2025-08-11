@@ -1,4 +1,4 @@
-'use client'
+
 import * as React from 'react'
 import { useState, useMemo, useEffect } from 'react'
 import Sidebar from '@/components/Sidebar'
@@ -20,11 +20,6 @@ export default function ReportsPage() {
         String(val).toLowerCase().includes(filter.toLowerCase())
       )
     )
-  }, [filter])
-
-  // Reset page when filter changes
-  useEffect(() => {
-    setCurrentPage(1)
   }, [filter])
 
   // Export to CSV
@@ -132,7 +127,7 @@ export default function ReportsPage() {
           {/* Data Table */}
           <div className="bg-white p-4 rounded-xl max-md:relative max-md:p-2 max-md:pt-10 shadow">
             {/* Pass currentPage and total pages from filteredData */}
-            <DataTable data={filteredData} page={10} currentPage={currentPage} onPageChange={setCurrentPage} />
+            <DataTable key = {filter + filteredData.length} data={filteredData} page={10} />
           </div>
         </main>
       </div>
