@@ -1,14 +1,12 @@
+// app/dashboard/report/page.tsx
 'use client'
-
 import * as React from 'react'
 import { useState, useMemo } from 'react'
-import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import Chart from '@/components/Chart'
 import DataTable from '@/components/DataTable'
 import { revenueOverTime, conversionsByChannel, trafficSources } from '@/data/mockCharts'
 import { tableData as originalData } from '@/data/mockTable'
-
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 
@@ -27,7 +25,7 @@ export default function ReportsPage() {
   const exportToCSV = () => {
     const headers = Object.keys(originalData[0]) as (keyof typeof originalData[0])[];
     const csvRows = [
-      headers.join(','), // header row
+      headers.join(','), 
       ...filteredData.map(row =>
         headers.map(field => JSON.stringify(row[field] ?? '')).join(',')
       ),
@@ -72,6 +70,7 @@ export default function ReportsPage() {
         <main className="flex-1 p-4 pt-8 max-md:p-2 overflow-y-auto space-y-6 max-md:space-y-4">
           {/* Charts */}
           <div className="w-full col-span-3 h-fit">
+              {/* Line Chart */}
               <Chart
                 title="Revenue Over Time"
                 type="line"
@@ -83,6 +82,7 @@ export default function ReportsPage() {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Bar Chart */}
             <Chart
               title="Conversions by Channel"
               type="bar"
@@ -90,6 +90,7 @@ export default function ReportsPage() {
               dataKey="conversions"
               labelKey="channel"
             />
+            {/* Pie */}
             <Chart
               title="Traffic Sources"
               type="pie"
@@ -109,14 +110,16 @@ export default function ReportsPage() {
             className="px-4 py-2 max-md:p-2 max-md:w-[75%] max-md:px-3 max-md:py-1.5  rounded border border-gray-400 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#06B6D4] w-[25%]"
           />
 
-
+            {/* Export buttons */}
             <div className="flex gap-2">
+              {/* Export as csv */}
               <button
                 onClick={exportToCSV}
                 className="px-4 py-2 max-md:px-2 max-md:py-1 max-md:text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition"
               >
                 Export CSV
               </button>
+              {/* Export as pdf */}
               <button
                 onClick={exportToPDF}
                 className="px-4 py-2 max-md:px-2 max-md:py-1 max-md:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition"

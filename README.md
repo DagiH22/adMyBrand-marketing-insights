@@ -1,4 +1,6 @@
 # 🚀 ADmyBRAND Marketing Insight
+**Live Demo**: [admybrand-marketing-insight.netlify.app](https://admybrand-marketing-insight.netlify.app/)
+
 
 **ADmyBRAND Insights** is an analytics dashboard designed for digital marketing agencies. Built with **Next.js**, **Tailwind CSS**, and **shadcn/ui**, it provides a modern and responsive UI to track key marketing metrics, user behavior, and more using interactive charts and mock data.
 

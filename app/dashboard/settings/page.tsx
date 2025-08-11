@@ -1,11 +1,7 @@
 // app/dashboard/settings/page.tsx
-
 'use client'
-
 import { useState, useEffect } from 'react'
 import { Switch } from '@/components/ui/switch'
-import { Button } from '@/components/ui/Button'
-import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 
 export default function SettingsPage() {
@@ -43,12 +39,15 @@ export default function SettingsPage() {
 
   return (
     <div className="flex max-md:flex-col max-md:relative h-screen bg-[#F4F0FF]">
+      {/* Sidebar */}
       <aside className="sticky max-md:static top-0 h-screen max-md:h-fit max-md:w-[100%] overflow-y-auto bg-[#F4F0FF] shadow-lg z-30">
         <Sidebar />
       </aside>
+
       <div className="flex-1  bg-[#F4F0FF]">
         <div className="p-4 pt-8 max-md:p-2 space-y-6 max-md:space-y-4">
           <div className="flex justify-between items-start w-[40%] max-md:w-[100%]">
+            {/* Settings tag */}
             <div>
               <h1 className="text-2xl font-bold mb-1">Settings</h1>
               <p className="text-sm text-muted-foreground">Manage your preferences</p>
@@ -60,7 +59,7 @@ export default function SettingsPage() {
               </button>
             )}
           </div>
-
+        {/* user info  */}
           <div className="p-6 rounded-xl shadow space-y-6 w-[40%] max-md:w-[100%] bg-[#FAF9FF]">
             <div className="space-y-2">
               <label className="block font-semibold text-sm">Name</label>
@@ -83,7 +82,7 @@ export default function SettingsPage() {
                 className="w-full px-3 py-2 border rounded-md focus:outline-none"
               />
             </div>
-
+              {/* Save Button */}
             {editing && (
               <button onClick={handleSave} className="mt-4 inline-flex items-center justify-center rounded-md bg-px-3 px-3 py-1.5 text-sm font-medium  bg-blue-600
                  focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer disabled:opacity-50 disabled:pointer-events-none" >
@@ -91,7 +90,7 @@ export default function SettingsPage() {
               </button>
             )}
           </div>
-
+          {/* preferences page */}
           <div className=" p-6 rounded-xl shadow space-y-6 w-[40%] max-md:w-[100%] bg-[#FAF9FF]">
             <h2 className="text-lg font-bold">Preferences</h2>
 

@@ -1,31 +1,28 @@
-
+// app/dashboard/overview/page.tsx
 import * as React from "react";
-
 import { metrics } from '@/data/mockMetrics'
 import { revenueOverTime, conversionsByChannel, trafficSources } from '@/data/mockCharts'
 import { tableData } from '@/data/mockTable'
-
 import MetricCard from '@/components/MetricCard'
 import Chart from '@/components/Chart'
 import DataTable from '@/components/DataTable'
-import Navbar from '@/components/Navbar'
 import Sidebar from "@/components/Sidebar";
 
 export default function DashboardPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#F4F0FF]">
-      <div className="flex flex-1 overflow-hidden flex-col md:flex-row  ">
-        {/* Sidebar */}
-        <aside className="sticky top-0  max-md:static md:h-screen overflow-y-auto bg-[#F4F0FF]  max-md:w-[100%] shadow-lg z-30">
-          <Sidebar />
-        </aside>
+    <div className="flex max-md:flex-col max-md:relative h-screen overflow-hidden bg-[#F4F0FF]">
+      {/* Sticky Sidebar */}
+      <aside className="sticky max-md:static top-0 h-full overflow-y-auto bg-[#F4F0FF] max-md:w-[100%] shadow-lg z-30">
+        <Sidebar />
+      </aside>
 
-        {/* Main content */}
-        <main className="flex-1 p-4 bg-[#F4F0FF] overflow-y-auto md:mt-[0px] max-md:p-2 pt-8  max-fold:bg-red-500">
+      {/* Main Content Area */}
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <main className="flex-1 p-4 pt-8 max-md:p-2 overflow-y-auto space-y-6">
           {/* KPI + Line Chart */}
-          <div className="grid lg:grid-cols-4 max-lg:grid-cols-1  max-2xl:grid-cols-5 gap-4 mb-4 w-full ">
+          <div className="grid lg:grid-cols-4 max-lg:grid-cols-1 max-2xl:grid-cols-5 gap-4 w-full">
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-md:grid-cols-2 max-2xl:col-span-2 max-md:w-fit max-md:gap-4 max-md:mt-2">
+            <div className="grid grid-cols-1 h-[100%] gap-y-6 sm:grid-cols-2 gap-2 max-md:grid-cols-2 max-2xl:col-span-2 max-md:w-fit max-md:gap-4 max-md:mt-2">
               {metrics.map((metrics) => (
                 <MetricCard
                   className="h-fit max-md:h-[100px]"
@@ -46,13 +43,13 @@ export default function DashboardPage() {
                 data={revenueOverTime}
                 dataKey="revenue"
                 labelKey="month"
-                className="h-[205px] max-md:m-0"
+                className="h-[205px]"
               />
             </div>
           </div>
 
           {/* Bar + Pie */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <Chart
               title="Conversions by Channel"
               type="bar"
@@ -70,7 +67,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Data Table */}
-          <div className="bg-white p-4 pb-2 rounded-xl shadow max-md:relative max-md:h-[360px] max-md:p-2 max-md:pt-10">
+          <div className="bg-white p-3 pb-2 rounded-xl shadow max-md:relative max-md:h-[360px] max-md:p-2 max-md:pt-10">
             <DataTable data={tableData} page={5} />
           </div>
         </main>
