@@ -1,18 +1,18 @@
+'use client'
 
 import * as React from 'react'
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import Sidebar from '@/components/Sidebar'
 import Chart from '@/components/Chart'
 import DataTable from '@/components/DataTable'
 import { revenueOverTime, conversionsByChannel, trafficSources } from '@/data/mockCharts'
 import { tableData as originalData } from '@/data/mockTable'
+
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 
 export default function ReportsPage() {
   const [filter, setFilter] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-
   const filteredData = useMemo(() => {
     if (!filter) return originalData
     return originalData.filter(row =>
@@ -26,14 +26,14 @@ export default function ReportsPage() {
   const exportToCSV = () => {
     const headers = Object.keys(originalData[0]) as (keyof typeof originalData[0])[];
     const csvRows = [
-      headers.join(','),
+      headers.join(','), // header row
       ...filteredData.map(row =>
         headers.map(field => JSON.stringify(row[field] ?? '')).join(',')
       ),
     ];
     const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
-
+  
     const a = document.createElement('a');
     a.href = url;
     a.download = 'report.csv';
@@ -100,13 +100,14 @@ export default function ReportsPage() {
 
           {/* Filter + Export */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 ">
-            <input
-              type="text"
-              value={filter}
-              onChange={e => setFilter(e.target.value)}
-              placeholder="Filter data..."
-              className="px-4 py-2 max-md:p-2 max-md:w-[75%] max-md:px-3 max-md:py-1.5  rounded border border-gray-400 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#06B6D4] w-[25%]"
-            />
+          <input
+            type="text"
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+            placeholder="Filter data..."
+            className="px-4 py-2 max-md:p-2 max-md:w-[75%] max-md:px-3 max-md:py-1.5  rounded border border-gray-400 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#06B6D4] w-[25%]"
+          />
+
 
             <div className="flex gap-2">
               <button
@@ -125,9 +126,8 @@ export default function ReportsPage() {
           </div>
 
           {/* Data Table */}
-          <div className="bg-white p-4 rounded-xl max-md:relative max-md:p-2 max-md:pt-10 shadow">
-            {/* Pass currentPage and total pages from filteredData */}
-            <DataTable key = {filter + filteredData.length} data={filteredData} page={10} />
+          <div className="bg-white  p-4 rounded-xl max-md:relative max-md:p-2 max-md:pt-10 shadow">
+            <DataTable key={filter + filteredData.length} data={filteredData} page={10} />
           </div>
         </main>
       </div>
