@@ -80,7 +80,7 @@ export default function Chart({ title, type, data, dataKey, labelKey, className 
 
   if (type === 'line') {
     chart = (
-      <LineChart data={data} className="max-md:p-0">
+      <LineChart data={data} className="p-0">
         <XAxis dataKey={labelKey} className="max-md:text-[10px]" />
         <YAxis className="max-md:text-[10px] max-md:ml-0" />
         <Tooltip

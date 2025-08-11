@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   LayoutDashboard,
   BarChart3,
@@ -23,9 +23,32 @@ const navItems = [
 export default function Sidebar() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const sidebarRef = useRef<HTMLDivElement>(null)
+
+  // Close menu on click outside (mobile only)
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        isOpen &&
+        window.innerWidth <= 768 && // only mobile
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [isOpen])
 
   return (
-    <aside className="h-full max-xl:w-60 xl:w-[100%] shadow p-6 flex flex-col bg-[#F4F0FF] max-md:w-full max-md:p-3 max-md:static">
+    <aside
+      ref={sidebarRef}
+      className="h-full max-xl:w-60 xl:w-[100%] shadow p-6 flex flex-col bg-[#F4F0FF] max-md:w-full max-md:p-3 max-md:static"
+    >
       {/* Logo & Hamburger */}
       <div className="flex items-center justify-between max-md:w-full">
         <a href="https://us.admybrand.com/" target='_blank'>
@@ -40,7 +63,7 @@ export default function Sidebar() {
         {/* Hamburger menu button only on mobile */}
         <button 
           className="p-2 md:hidden" 
-          onClick={() => setIsOpen(!isOpen)} 
+          onClick={() => setIsOpen(prev => !prev)} 
           aria-label="Toggle Menu"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -50,10 +73,10 @@ export default function Sidebar() {
       {/* Navigation */}
       <nav
         className={cn(
-          "mt-8 space-y-3 md:space-y-3",
-          "md:block", // always show on desktop
-          isOpen ? "block max-md:mt-4" : "hidden md:block", // toggle on mobile
-          "w-[40] max-md:flex max-md:flex-col max-md:gap-2 max-md:bg-white max-md:rounded-lg max-md:shadow-lg max-md:p-3 max-md:text-sm  max-md:absolute max-md:top-11 max-md:right-2 max-md:m-0 max-md:z-50 max-md:bg-[ rgba(255, 255, 255)] max-md:text-black"
+          "mt-8 space-y-3 md:space-y-3 md:block",
+          isOpen
+            ? "block max-md:mt-4 max-md:flex max-md:flex-col max-md:gap-2 max-md:bg-white max-md:rounded-lg max-md:shadow-lg max-md:p-3 max-md:text-sm max-md:absolute max-md:top-11 max-md:right-2 max-md:m-0 max-md:z-50 max-md:text-black"
+            : "hidden"
         )}
       >
         {navItems.map(({ name, href, icon: Icon }) => (

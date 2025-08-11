@@ -13,7 +13,7 @@ export default function MetricCard({ title, value, change, icon }: MetricCardPro
       className={`
         p-3 rounded-xl shadow bg-[#FAF9FF]
         flex flex-col justify-between gap-1
-        h-[88px] md:h-[84px]
+        h-[88px] md:h-[90px]
         /* make cards narrower between 768px and 1023px */
         md:w-[140px] md:max-w-[140px] md:min-w-0
         /* larger screens revert to natural width */
