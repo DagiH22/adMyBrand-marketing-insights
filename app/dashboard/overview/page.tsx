@@ -1,6 +1,5 @@
 // app/dashboard/overview/page.tsx
 import * as React from "react";
-import { useState } from "react";
 import { metrics } from '@/data/mockMetrics'
 import { revenueOverTime, conversionsByChannel, trafficSources } from '@/data/mockCharts'
 import { tableData } from '@/data/mockTable'
@@ -10,7 +9,6 @@ import DataTable from '@/components/DataTable'
 import Sidebar from "@/components/Sidebar";
 
 export default function DashboardPage() {
-  const [currentPage, setCurrentPage] = useState(1)
   return (
     <div className="flex max-md:flex-col max-md:relative h-screen overflow-hidden bg-[#F4F0FF]">
       {/* Sticky Sidebar */}

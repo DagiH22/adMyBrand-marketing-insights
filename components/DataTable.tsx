@@ -10,18 +10,19 @@ interface TableProps {
     status: string
     signupDate: string
   }[],
-  page?: number,
-  currentPage: number,             // controlled current page
-  onPageChange: (page: number) => void  // notify parent on page change
+  page?: number
 }
+
 
 type SortKey = keyof TableProps["data"][0]
 type SortDirection = "asc" | "desc"
 
-export default function DataTable({ data , page}: TableProps) {
+export default function DataTable({ data , page }: TableProps) {
   const ITEMS_PER_PAGE = page ?? 4
+  const [currentPage, setCurrentPage] = React.useState(1)
   const [sortKey, setSortKey] = React.useState<SortKey>("name")
   const [sortDirection, setSortDirection] = React.useState<SortDirection>("asc")
+
   const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE)
 
   const handleSort = (key: SortKey) => {
@@ -33,83 +34,87 @@ export default function DataTable({ data , page}: TableProps) {
       setSortKey(key)
       setSortDirection("asc")
     }
+    setCurrentPage(1) // Reset to page 1 on new sort
   }
 
-  const sortedData = React.useMemo(() => {
-    return [...data].sort((a, b) => {
-      const aVal = a[sortKey]
-      const bVal = b[sortKey]
+  const sortedData = [...data].sort((a, b) => {
+    const aVal = a[sortKey]
+    const bVal = b[sortKey]
 
-      // Handle numeric sort if revenue
-      const isNumeric = sortKey === "revenue"
-      const valA = isNumeric ? parseFloat(aVal.replace(/[^0-9.-]+/g, "")) : aVal
-      const valB = isNumeric ? parseFloat(bVal.replace(/[^0-9.-]+/g, "")) : bVal
-      if (valA < valB) return sortDirection === "asc" ? -1 : 1
-      if (valA > valB) return sortDirection === "asc" ? 1 : -1
-      return 0
-    })
-  }, [data, sortKey, sortDirection])
+    // Handle numeric sort if revenue
+    const isNumeric = sortKey === "revenue"
+    const valA = isNumeric ? parseFloat(aVal.replace(/[^0-9.-]+/g, "")) : aVal
+    const valB = isNumeric ? parseFloat(bVal.replace(/[^0-9.-]+/g, "")) : bVal
+
+    if (valA < valB) return sortDirection === "asc" ? -1 : 1
+    if (valA > valB) return sortDirection === "asc" ? 1 : -1
+    return 0
+  })
+
+  const paginatedData = sortedData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  )
 
 
 
   return (
     <div className="overflow-x-auto bg-white pt-2 pb-0 mb-0 px-4 rounded-xl shadow max-md:h-[100%] ">
       <div className="flex items-center justify-between relative w-full max-md:static max-md:gap-5">
-        {/* Heading - stick to left */}
+  {/* Heading - stick to left */}
         <h2 className="text-lg font-semibold w-fit max-md:text-xl">Recent Signups</h2>
 
-        {/* Pagination */}
-        <div className="flex-1 flex justify-between absolute left-1/2 max-lg:left-2/3 transform -translate-x-1/2 max-md:top-2 max-md:left-1/2 max-md:transform max-md:-translate-x-1/2 max-md:h-fit max-md:w-fit">
-          <div className="flex items-center gap-4 max-md:text-xs">
-            <button
-              onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50 "
-            >
-              Previous
-            </button>
+  {/* Spacer to push the next div to center */}
+      <div className="flex-1 flex justify-between absolute  left-1/2 max-lg:left-2/3 transform -translate-x-1/2 max-md:top-2 max-md:left-1/2 max-md:transform max-md:-translate-x-1/2 max-md: max-md:h-fit max-md:w-fit">
+        <div className="flex items-center gap-4 max-md:text-xs">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50 "
+              >
+                Previous
+              </button>
+              
+              <span className="text-sm text-muted-foreground">
+                {currentPage}/{totalPages}
+              </span>
 
-            <span className="text-sm text-muted-foreground">
-              {currentPage} / {totalPages}
-            </span>
-
-            <button
-              onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-2 py-1 bg-gray-300 cursor-pointer rounded disabled:opacity-50"
+              >
+                Next
+              </button>
         </div>
       </div>
+</div>
 
-      {/* data table */}
-      <table className="min-w-fit text-sm text-left py-1 my-4 bg-black-500 max-md:text-xs">
-        <thead>
-          <tr>
-            {["name", "email", "revenue", "status", "signupDate"].map((key) => (
-              <th
-                key={key}
-                className="px-4 py-2 cursor-pointer select-none text-left "
-                onClick={() => handleSort(key as SortKey)}
-              >
-                <div className="flex items-center gap-3 capitalize">
-                  {key}
-                  {sortKey === key && (
-                    <span className="text-sm">
-                      {sortDirection === "asc" ? "^" : "˅"}
-                    </span>
-                  )}
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-
+      
+      <table className="min-w-fit text-sm text-left py-1 my-4  bg-black-500 max-md:text-xs">
+      <thead>
+  <tr>
+    {["name", "email", "revenue", "status", "signupDate"].map((key) => (
+      <th
+        key={key}
+        className="px-4 py-2 cursor-pointer select-none text-left "
+        onClick={() => handleSort(key as SortKey)}
+      >
+        <div className="flex items-center  gap-3 capitalize">
+          {key}
+          {sortKey === key && (
+            <span className="text-sm">
+              {sortDirection === "asc" ? "^" : "˅"}
+            </span>
+          )}
+        </div>
+      </th>
+    ))}
+  </tr>
+</thead>
         <tbody>
           {paginatedData.map((row) => (
-            <tr key={row.id} className="border-t hover:bg-[#f0ebff] transition-colors">
+            <tr key={row.id} className="border-t hover:bg-[#f0ebff] transition-colors  ">
               <td className="px-4 py-2">{row.name}</td>
               <td className="px-4 py-2">{row.email}</td>
               <td className="px-4 py-2">{row.revenue}</td>
@@ -119,6 +124,8 @@ export default function DataTable({ data , page}: TableProps) {
           ))}
         </tbody>
       </table>
+
+      
     </div>
   )
 }
